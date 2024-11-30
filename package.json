@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "npm run server & npm run client",
     "server": "npm start --prefix daily-earn-backend",
     "client": "npm start --prefix daily-earn-frontend"
   },
@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
+  "dependencies": {
     "concurrently": "^9.0.1"
   }
 }
