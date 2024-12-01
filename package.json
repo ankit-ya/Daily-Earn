@@ -5,7 +5,8 @@
   "scripts": {
     "start": "npx concurrently \"npm run server\" \"npm run client\"",
     "server": "npm start --prefix daily-earn-backend",
-    "client": "npm start --prefix daily-earn-frontend"
+    "client": "npm start --prefix daily-earn-frontend",
+    "postinstall": "npm install -g concurrently"
   },
   "keywords": [],
   "author": "",
