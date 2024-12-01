@@ -1,0 +1,36 @@
+/* Light Mode (default) */
+:root {
+  --background-color: white;
+  --text-color: black;
+  --navbar-bg-color: white;
+  --navbar-text-color: black;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+  --background-color: #121212;
+  --text-color: #f1f1f1;
+  --navbar-bg-color: #333;
+  --navbar-text-color: #fff;
+}
+
+/* Apply global styles */
+body, html, .app, .navbar {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar {
+  background-color: var(--navbar-bg-color);
+  color: var(--navbar-text-color);
+}
+
+.navbar a {
+  color: var(--navbar-text-color);
+}
+
+button {
+  background-color: var(--navbar-bg-color);
+  color: var(--text-color);
+}

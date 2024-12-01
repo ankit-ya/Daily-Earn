@@ -1,0 +1,223 @@
+/* Navbar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff8c00; /* Warm color for better contrast */
+    padding: 0.5rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar:hover {
+    transform: translateY(-5px);
+}
+
+/* Logo styling */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.logo-image:hover {
+    transform: scale(1.1);
+}
+
+/* Links styling */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Links for individual menu items */
+.nav-links li {
+    position: relative;
+}
+
+/* Links styling */
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Dropdown styling */
+.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    animation: slideIn 0.3s ease-out;
+    width: max-content; /* Adjust width based on content */
+}
+
+/* Reduce gap between dropdown items */
+.dropdown li {
+    margin: 0; /* Remove extra spacing between items */
+}
+
+li:hover .dropdown {
+    display: block;
+}
+
+.dropdown li a {
+    color: white;
+    padding: 0.5rem 1rem; /* Adjust padding for reduced gap */
+    display: block;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.dropdown li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Dropdown slide-in animation */
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hamburger menu for mobile view */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+}
+
+/* Mobile menu display */
+/* Mobile menu display */
+.nav-links.active {
+    display: flex;
+    flex-direction: column;
+    background-color: #444;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    max-height: 80vh; /* Restrict the height to 80% of the viewport */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    padding: 1rem;
+    border-radius: 0 0 12px 12px;
+    z-index: 1000;
+}
+
+/* Style the scrollbar for better appearance */
+.nav-links.active::-webkit-scrollbar {
+    width: 8px;
+}
+
+.nav-links.active::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+}
+
+.nav-links.active::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.nav-links.active::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+
+.nav-links li {
+    text-align: center;
+    margin: 0.5rem 0; /* Adjust spacing between items */
+}
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .hamburger div {
+        width: 30px;
+    }
+}
+
+/* Profile dropdown styling */
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: #444;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links li:hover .profile-dropdown {
+    display: block;
+}
+
+/* Dark mode transition */
+.navbar.dark-navbar {
+    background-color: #333;
+}
+
+.nav-links a {
+    color: #fff;
+}
+
+.navbar .hamburger div {
+    background-color: #fff;
+}
+
+.navbar.dark-navbar .hamburger div {
+    background-color: #bbb;
+}
