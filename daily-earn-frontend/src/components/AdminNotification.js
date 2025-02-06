@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client'; // Import socket.io-client
 
-const API_URL = 'http://localhost:5000/api'; // Your API base URL
-const socket = io('http://localhost:5000'); // Connect to the WebSocket server
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // Your API base URL
+const socket = io(process.env.REACT_APP_API_BASE_URL); // Connect to the WebSocket server
 
 const AdminNotification = () => {
     const [message, setMessage] = useState('');
@@ -28,7 +28,7 @@ const AdminNotification = () => {
 
         try {
             // Send the notification via API
-            await axios.post(`${API_URL}/send-notification`, { message }, {
+            await axios.post(`${API_BASE_URL}/send-notification`, { message }, {
                 headers: {
                     'x-auth-token': token,
                 },

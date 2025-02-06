@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { fetchUserData } from '../services/api'; // Adjust the import path accordingly
 import AdminWithdrawals from './AdminWithdrawals'; // Import the separate withdrawals component
 
-const API_URL = 'http://localhost:5000/api'; // Define the API_URL
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // Define the API_BASE_URL
 
 const categories = ["Data Entry", "Surveys", "Content Writing", "Reading Stories"]; // Sample categories
 
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
 
     const fetchWithdrawals = async (token) => {
         try {
-            const response = await axios.get(`${API_URL}/withdrawals`, {
+            const response = await axios.get(`${API_BASE_URL}/withdrawals`, {
                 headers: { 'x-auth-token': token }
             });
             setWithdrawals(response.data);
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
 
     const fetchTasks = async (token) => {
         try {
-            const response = await axios.get(`${API_URL}/tasks`, {
+            const response = await axios.get(`${API_BASE_URL}/tasks`, {
                 headers: { 'x-auth-token': token }
             });
             setTasks(response.data);
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
 
     const fetchFeedbacks = async (token) => {
         try {
-            const response = await axios.get(`${API_URL}/feedback`, {
+            const response = await axios.get(`${API_BASE_URL}/feedback`, {
                 headers: { 'x-auth-token': token }
             });
             setFeedbacks(response.data); // Update state with feedback data
@@ -73,7 +73,7 @@ const AdminDashboard = () => {
 
     const handleWithdrawalStatus = async (id, status) => {
         try {
-            await axios.put(`${API_URL}/withdrawals/${id}`, { status }, {
+            await axios.put(`${API_BASE_URL}/withdrawals/${id}`, { status }, {
                 headers: { 'x-auth-token': localStorage.getItem('token') }
             });
             alert('Withdrawal status updated!');
@@ -106,14 +106,14 @@ const AdminDashboard = () => {
         try {
             if (editingTaskId) {
                 // Update a single task (edit mode)
-                await axios.put(`${API_URL}/tasks/${editingTaskId}`, taskList[0], {
+                await axios.put(`${API_BASE_URL}/tasks/${editingTaskId}`, taskList[0], {
                     headers: { 'x-auth-token': token }
                 });
                 alert('Task updated!');
                 setEditingTaskId(null);
             } else {
                 // Add tasks in bulk
-                await axios.post(`${API_URL}/tasks/bulk`, { tasks: taskList }, {
+                await axios.post(`${API_BASE_URL}/tasks/bulk`, { tasks: taskList }, {
                     headers: { 'x-auth-token': token }
                 });
                 alert('Tasks added!');
@@ -137,7 +137,7 @@ const AdminDashboard = () => {
     const deleteTask = async (id) => {
         const token = localStorage.getItem('token');
         try {
-            await axios.delete(`${API_URL}/tasks/${id}`, {
+            await axios.delete(`${API_BASE_URL}/tasks/${id}`, {
                 headers: { 'x-auth-token': token }
             });
             alert('Task deleted!');
