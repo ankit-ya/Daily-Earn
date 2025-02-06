@@ -1,15 +1,15 @@
 import axios from 'axios';
 
  // Updated API URLconst
- const API_URL = 'http://localhost:5000/api';
-// Correcting login API call with API_URL
+ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+// Correcting login API call with API_BASE_URL
 export const loginUser = async (email, password) => {
-  const response = await axios.post(`${API_URL}/login`, { email, password });
+  const response = await axios.post(`${API_BASE_URL}/login`, { email, password });
   return response;
 };
 
 export const registerUser = async (username, email, password, isAdmin) => {
-  const response = await axios.post(`${API_URL}/register`, { username, email, password, isAdmin });
+  const response = await axios.post(`${API_BASE_URL}/register`, { username, email, password, isAdmin });
   return response;
 };
 
@@ -18,7 +18,7 @@ export const registerUser = async (username, email, password, isAdmin) => {
 // In frontend (services/api.js)
 // Admin Login
 export const adminLogin = async (email, password) => {
-  const response = await axios.post(`${API_URL}/admin/login`, { email, password });
+  const response = await axios.post(`${API_BASE_URL}/admin/login`, { email, password });
   if (response.data.token) {
     localStorage.setItem('token', response.data.token); // Store the token
   }
@@ -29,7 +29,7 @@ export const adminLogin = async (email, password) => {
 
 // Admin Registration
 export const adminRegister = async (username, email, password, secret) => {
-  const response = await axios.post(`${API_URL}/admin/register`, { username, email, password, secret });
+  const response = await axios.post(`${API_BASE_URL}/admin/register`, { username, email, password, secret });
   return response;
 };
 
@@ -37,7 +37,7 @@ export const adminRegister = async (username, email, password, secret) => {
  //New function to fetch notifications
  export const fetchNotifications = async (token) => {
   try {
-      const response = await axios.get(`${API_URL}/notifications`, {
+      const response = await axios.get(`${API_BASE_URL}/notifications`, {
           headers: {
              'x-auth-token': token // Use the token passed as a parameter
           },
@@ -56,7 +56,7 @@ export const adminRegister = async (username, email, password, secret) => {
 // New function to send admin notification
 export const sendAdminNotification = async (token, message) => {
   try {
-    const response = await axios.post(`${API_URL}/send-notification`, { message }, {
+    const response = await axios.post(`${API_BASE_URL}/send-notification`, { message }, {
       headers: { 'x-auth-token': token },
     });
     return response.data;
@@ -68,15 +68,15 @@ export const sendAdminNotification = async (token, message) => {
 
 
 
-// Correcting other API calls with API_URL
+// Correcting other API calls with API_BASE_URL
 export const fetchUserData = async (token) => {
-  const response = await axios.get(`${API_URL}/user`, {
+  const response = await axios.get(`${API_BASE_URL}/user`, {
     headers: { 'x-auth-token': token },
   });
   return response;
 };
 export const convertCoins = async (token, coinsToConvert) => {
-  return await axios.post(`${API_URL}/convert`, { coinsToConvert }, {
+  return await axios.post(`${API_BASE_URL}/convert`, { coinsToConvert }, {
       headers: { 'x-auth-token': token },
   });
 };
@@ -84,14 +84,14 @@ export const convertCoins = async (token, coinsToConvert) => {
 
 // New API call for fetching the withdrawal history
 export const fetchWithdrawals = async (token) => {
-  return await axios.get(`${API_URL}/withdrawals`, {
+  return await axios.get(`${API_BASE_URL}/withdrawals`, {
     headers: { 'x-auth-token': token },
   });
 };
 
 // New API call for updating withdrawal status
 export const updateWithdrawalStatus = async (token, withdrawId, status) => {
-  return await axios.put(`${API_URL}/withdraw/${withdrawId}/status`, { status }, {
+  return await axios.put(`${API_BASE_URL}/withdraw/${withdrawId}/status`, { status }, {
     headers: { 'x-auth-token': token },
   });
 };
@@ -99,7 +99,7 @@ export const updateWithdrawalStatus = async (token, withdrawId, status) => {
 
 export const fetchTransactionHistory = async (token) => {
   try {
-    const response = await axios.get(`${API_URL}/transaction-history`, {
+    const response = await axios.get(`${API_BASE_URL}/transaction-history`, {
       headers: { 'x-auth-token': token },
     });
     return response; // Return the response object.
@@ -112,7 +112,7 @@ export const fetchTransactionHistory = async (token) => {
 
 // Fetch Earnings
 export const fetchEarnings = async (token) => {
-  return await axios.get(`${API_URL}/earnings`, {
+  return await axios.get(`${API_BASE_URL}/earnings`, {
     headers: { 'x-auth-token': token },
   });
 };
@@ -120,7 +120,7 @@ export const fetchEarnings = async (token) => {
 //user update profile 
 export const updateUserData = async (data, token) => {
   try {
-    const response = await axios.put(`${API_URL}/user`, data, {
+    const response = await axios.put(`${API_BASE_URL}/user`, data, {
       headers: { 'x-auth-token': token },
     });
     return response.data; // Adjust based on your response structure
@@ -135,7 +135,7 @@ export const updateUserData = async (data, token) => {
 // Function to submit feedback
 export const submitFeedback = async (feedback,email) => {
   try {
-    const response = await fetch(`${API_URL}/feedback`, {
+    const response = await fetch(`${API_BASE_URL}/feedback`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ export const submitFeedback = async (feedback,email) => {
 // Function to retrieve all feedback (for admin)
 export const getFeedbacks = async () => {
   try {
-    const response = await fetch(`${API_URL}`, {
+    const response = await fetch(`${API_BASE_URL}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ export const getFeedbacks = async () => {
 
 export const getUserReferralInfo = async () => {
   const token = localStorage.getItem('token');
-  const response = await fetch(`${API_URL}/referral-info`, {
+  const response = await fetch(`${API_BASE_URL}/referral-info`, {
       method: 'GET',
       headers: { 'x-auth-token': token },
   });
@@ -194,7 +194,7 @@ export const getUserReferralInfo = async () => {
 
 export const updateReferralRewards = async (userId, rewardAmount) => {
   const token = localStorage.getItem('token');
-  const response = await fetch(`${API_URL}/update-rewards`, {
+  const response = await fetch(`${API_BASE_URL}/update-rewards`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -213,20 +213,20 @@ export const updateReferralRewards = async (userId, rewardAmount) => {
 
 //for testing purpose 
 export const requestWithdrawal = async (token, amount) => {
-  return await axios.post(`${API_URL}/withdraw`, { amount }, {
+  return await axios.post(`${API_BASE_URL}/withdraw`, { amount }, {
     headers: { 'x-auth-token': token },
   });
 };
 
 export const verifyWithdrawal = async (token, verificationCode) => {
-  return await axios.post(`${API_URL}/verify-withdrawal`, { verificationCode }, {
+  return await axios.post(`${API_BASE_URL}/verify-withdrawal`, { verificationCode }, {
     headers: { 'x-auth-token': token },
   });
 };
 
 export const initiateRazorpayWithdrawal = async (token, amount) => {
   try {
-    const response = await axios.post(`${API_URL}/withdraw`, { amount }, {
+    const response = await axios.post(`${API_BASE_URL}/withdraw`, { amount }, {
       headers: { 'x-auth-token': token },
     });
     const { order } = response.data;
@@ -263,7 +263,7 @@ export const initiateRazorpayWithdrawal = async (token, amount) => {
 // Add this function to verify payment after success
 export const verifyRazorpayPayment = async (token, paymentData) => {
   try {
-    const response = await axios.post(`${API_URL}/verify-payment`, paymentData, {
+    const response = await axios.post(`${API_BASE_URL}/verify-payment`, paymentData, {
       headers: { 'x-auth-token': token },
     });
     return response.data;
@@ -290,7 +290,7 @@ export const submitTask = async (taskId, token) => {
 
 export const getWithdrawalRequests = async (token) => {
   try {
-      const response = await axios.get(`${API_URL}/withdrawals/admin/requests`, {
+      const response = await axios.get(`${API_BASE_URL}/withdrawals/admin/requests`, {
           headers: { 'x-auth-token': token },
       });
       return response.data;
@@ -302,7 +302,7 @@ export const getWithdrawalRequests = async (token) => {
 export const submitWithdrawalRequest = async (token, amount,upiId) => {
   try {
       const data = { amount , upiId,};
-      const response = await axios.post(`${API_URL}/withdrawals/request`, data, {
+      const response = await axios.post(`${API_BASE_URL}/withdrawals/request`, data, {
           headers: { 'x-auth-token': token },
       });
       return response.data;
@@ -318,7 +318,7 @@ export const submitWithdrawalRequest = async (token, amount,upiId) => {
 export const completeWithdrawalRequest = async (requestId, token) => {
   try {
       const response = await axios.post(
-          `${API_URL}/withdrawals/admin/update`,
+          `${API_BASE_URL}/withdrawals/admin/update`,
           { requestId, action: 'approve' },  // Assuming you're approving
           { headers: { 'x-auth-token': token } }
       );
